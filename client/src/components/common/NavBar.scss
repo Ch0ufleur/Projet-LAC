@@ -1,8 +1,30 @@
 #navbar {
     display: flex;
-    justify-content: space-between;
-    width: 100%;
-    padding-bottom: 20px;
-    border-bottom: 1px solid gray;
-    margin-bottom: 10px;
+    flex-direction: row;
+    justify-content: center;
+    padding-bottom: 2.5em;
+    padding-top: 1em;
 }
+
+.navbar-width {
+    width: 75vw;
+    flex-direction: row;
+    display: flex;
+    gap: 1em;
+}
+
+.navbar-logo {
+    max-width: 50% ;
+    height: auto;
+}
+
+#catalogButton {
+    background-color: rgba(30, 152, 215, 1);
+}
+
+.catalog-button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+

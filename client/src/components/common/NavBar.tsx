@@ -7,6 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import { Role } from "../../model/enum/Role";
 import { UnlockAccess } from "../connection/UnlockAccess";
+import logo from "../../img/logo-lac.png";
 
 interface Props {}
 
@@ -22,64 +23,23 @@ const NavBar: React.FC<Props> = ({}) => {
 
   const navigate = useNavigate();
 
-  const navigateSummary = useCallback(() => {
-    navigate("/summary");
-    handleClose();
-  }, [navigate]);
-
-  const navigateMission = useCallback(() => {
-    navigate("/mission");
-    handleClose();
-  }, [navigate]);
-
-  const navigateTeam = useCallback(() => {
-    navigate("/team");
-    handleClose();
-  }, [navigate]);
-
-  const navigateCreation = useCallback(() => {
-    navigate("/creation");
+  const navigateCatalog = useCallback(() => {
+    navigate("/cataogue");
     handleClose();
   }, [navigate]);
 
   return (
     <div id="navbar">
-      <div id="profile">
-        <Button className="navbutton" href="/catalogue">Catalogue</Button>
-        <UnlockAccess
-            role={[Role.Deputy, Role.Comity, Role.PolyPress]}
-            children={<Button href="/dashboard">Tableau de board</Button>}
-        ></UnlockAccess>
-        <span>
-          <Button
-              id="basic-button"
-              aria-controls={open ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleOpen}
-          >
-            À propos
-          </Button>
-          <Menu
-              id="basic-menu"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              MenuListProps={{
-                "aria-labelledby": "basic-button",
-              }}
-          >
-            <MenuItem onClick={navigateSummary}>Sommaire</MenuItem>
-            <MenuItem onClick={navigateMission}>
-              Mission, vision et objectifs
-            </MenuItem>
-            <MenuItem onClick={navigateTeam}>Équipe</MenuItem>
-            <MenuItem onClick={navigateCreation}>Création du LAC</MenuItem>
-          </Menu>
-        </span>
-      </div>
-      <div id="loginStatus">
-        <Login />
+      <div className="navbar-width">
+              <img src={logo} alt="LAC logo" className="navbar-logo"/>
+              <div className="catalog-button-container">
+                  <Button id="catalogButton" onClick={navigateCatalog} variant="contained">Catalogue</Button>
+              </div>
+              <UnlockAccess
+                  role={[Role.Deputy, Role.Comity, Role.PolyPress]}
+                  children={<Button href="/dashboard">Tableau de board</Button>}
+              ></UnlockAccess>
+          <Login />
       </div>
     </div>
   );

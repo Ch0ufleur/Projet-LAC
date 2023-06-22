@@ -1,0 +1,54 @@
+.verification-list-container {
+  border: transparent;
+  border-radius: 8px;
+  background-color: #41aae6;
+  display: inline-block;
+  padding: 1em;
+}
+
+.verification-title {
+  padding-bottom: 0.5em;
+  font-family: Syne, serif;
+  font-size: 24px;
+  font-weight: bold;
+  color: #090040;
+}
+
+.checklist-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.drag-and-drop-container {
+  border: 1px dashed black;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+}
+
+.drag-and-drop-prompt {
+  padding-top: 10%;
+  padding-bottom: 10%;
+}
+
+a {
+  text-decoration: none;
+  font-weight: bolder;
+  color: #C21F39;
+}
+
+a:hover {
+  color: #ff4e6d;
+}
+
+.landing-segment-container {
+  display: flex;
+  justify-content: center;
+}
+
+.landing-segment-column-left {
+  display: flex;
+  width: 75vw;
+  flex-direction: column;
+  gap: 2em;
+}

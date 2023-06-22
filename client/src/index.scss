@@ -10,12 +10,18 @@ body {
 
 html {
   margin: 0;
-  background-color: #F8F6EE;
+  background-color: #f6f5f0;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.page-title {
+  font-family: Gotu, serif;
+  font-size: 32px;
+  padding-bottom: 0.2em;
 }
 
 * {

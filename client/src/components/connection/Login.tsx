@@ -100,7 +100,7 @@ export default function Login() {
   }
 
   return (
-    <div>
+    <div className="connect-state-button">
       {!Cookies.get("logged_in") && (
         <Button id="loginButton" variant="contained" onClick={handleClickOpen}>
           Se connecter

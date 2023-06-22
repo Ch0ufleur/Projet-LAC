@@ -16,7 +16,7 @@ import ResetPassword from "./connection/ResetPassword";
 import axios from "axios";
 import { ResponseSnackbar, SnackbarObject } from "../utils/ResponseSnackbar";
 import AboutPage from "./landingPage/AboutPage";
-import AddCaseStudy from "./catalogue/AddCaseStudy";
+import AddCaseStudy from "./catalogue/addCaseStudy/AddCaseStudy";
 
 function App() {
   env.config({ path: `.env.${process.env.NODE_ENV}`})

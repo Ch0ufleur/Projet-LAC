@@ -5,14 +5,15 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { FormLabel, InputLabel, Select, Checkbox, ListItemText, Accordion, AccordionSummary, Typography, AccordionDetails, FormGroup, FormControlLabel } from "@mui/material";
-import { NewCaseStudy } from "../../model/CaseStudy";
+import { NewCaseStudy } from "../../../model/CaseStudy";
 import axios from "axios";
 import MenuItem from "@mui/material/MenuItem";
-import { Disciplines, Subjects } from "./Catalogue";
-import NavBar from "../common/NavBar";
+import { Disciplines, Subjects } from "../Catalogue";
+import NavBar from "../../common/NavBar";
 import { useNavigate } from "react-router-dom";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { checkList } from "../deputy/newCase/NewCase";
+import { checkList } from "../../deputy/newCase/NewCase";
+import CaseStudyFileUpload from "./CaseStudyFileUpload";
 
 export default function AddCaseStudy() {
   const navigate = useNavigate();
@@ -61,6 +62,14 @@ export default function AddCaseStudy() {
   const onValidation = (e: any) => {
     let isValid = true;
     const stateErrorsCopy = { ...initialStateErrors };
+
+    if (e.caseStudyFile.value.trim() === "") {
+      stateErrorsCopy.caseStudyFile = {
+        isError: true,
+        message: "Veuillez entrer votre étude de cas",
+      };
+      isValid = false;
+    }
 
     if (e.caseStudyFile.value.trim() === "") {
       stateErrorsCopy.caseStudyFile = {
@@ -202,12 +211,16 @@ export default function AddCaseStudy() {
   return (
     <div>
       <NavBar></NavBar>
-      <div style={{margin: '0px 200px'}}>
-        <DialogTitle>Ajouter une étude de cas</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Entrez les informations de l'étude de cas.
-          </DialogContentText>
+      <div>
+        <div className="landing-segment-container">
+          <div className="landing-segment-column-left">
+            <div>
+              <div className="page-title">Ajouter une étude de cas</div>
+              <div className="title-group-separator"></div>
+            </div>
+          </div></div>
+
+          <CaseStudyFileUpload></CaseStudyFileUpload>
           <ul>
             {Object.entries(stateErrors).map(
               ([field, error]) =>
@@ -365,7 +378,6 @@ export default function AddCaseStudy() {
               </Typography>
             </AccordionDetails>
           </Accordion>
-        </DialogContent>
         <div style={{marginLeft: '24px'}}>
           <Button disabled={!isVerified} variant="contained" type="submit" form="caseStudyForm">
             Ajouter

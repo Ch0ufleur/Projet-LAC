@@ -10,11 +10,8 @@ import { useNavigate } from "react-router-dom";
 
 const CaseStudyInformationForm = () => {
     const navigate = useNavigate();
-    const [caseStudyFileName, setCaseStudyFileName] = React.useState(
-        "Aucune étude de cas n'a été téléversée"
-    );
+
     const initialStateErrors = {
-        caseStudyFile: { isError: false, message: "" },
         title: { isError: false, message: "" },
         desc: { isError: false, message: ""},
         author: { isError: false, message: "" },
@@ -46,20 +43,6 @@ const CaseStudyInformationForm = () => {
         discipline: "",
         subject: "",
     });
-
-
-
-
-
-    const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files.length > 0) {
-            let fileNames = e.target.files[0].name;
-            for (let i = 1; i < e.target.files.length; i++) {
-                fileNames += ", " + e.target.files[i].name;
-            }
-            setCaseStudyFileName(fileNames);
-        }
-    };
 
 
 
@@ -111,22 +94,6 @@ const CaseStudyInformationForm = () => {
     const onValidation = (e: any) => {
         let isValid = true;
         const stateErrorsCopy = { ...initialStateErrors };
-
-        if (e.caseStudyFile.value.trim() === "") {
-            stateErrorsCopy.caseStudyFile = {
-                isError: true,
-                message: "Veuillez entrer votre étude de cas",
-            };
-            isValid = false;
-        }
-
-        if (e.caseStudyFile.value.trim() === "") {
-            stateErrorsCopy.caseStudyFile = {
-                isError: true,
-                message: "Veuillez entrer votre étude de cas",
-            };
-            isValid = false;
-        }
 
         if (e.title.value.trim() === "") {
             stateErrorsCopy.title = {
@@ -213,22 +180,7 @@ const CaseStudyInformationForm = () => {
                 />
                 <FormLabel>Étude de cas payante</FormLabel>
             </div>
-            <div>
-                <Button variant="contained" component="label">
-                    Téléverser l'étude de cas
-                    <input
-                        hidden
-                        accept=".doc,.docx,.pdf"
-                        type="file"
-                        onChange={handleFileUpload}
-                        name="caseStudyFile"
-                        multiple
-                    />
-                </Button>
-                <FormLabel error={stateErrors.caseStudyFile.isError}>
-                    {caseStudyFileName && <span>{caseStudyFileName}</span>}
-                </FormLabel>
-            </div>
+
             <TextField
                 autoFocus
                 margin="dense"

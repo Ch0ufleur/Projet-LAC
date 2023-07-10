@@ -34,8 +34,7 @@ export default function AddCaseStudy() {
             </div>
           </div>
         </div>
-
-          <CaseStudyFileUpload></CaseStudyFileUpload>
+        <CaseStudyFileUpload></CaseStudyFileUpload>
         <CaseStudyInformationForm></CaseStudyInformationForm>
 
 

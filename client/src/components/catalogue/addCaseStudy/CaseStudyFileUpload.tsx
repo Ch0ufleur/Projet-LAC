@@ -4,7 +4,8 @@ import {Checkbox, FormControlLabel, FormGroup, FormLabel} from "@mui/material";
 import { checkList } from "../../roles/approval/deputy/Feedback";
 import Button from "@mui/material/Button";
 
-const CaseStudyFileUpload = () => {
+// @ts-ignore
+const CaseStudyFileUpload = ({updateFiles}) => {
     const [isVerified, setVerified] = React.useState(false);
     const [checkedState, setCheckedState] = React.useState<boolean[]>(new Array(checkList.length).fill(false));
     const initialStateErrors = {
@@ -39,6 +40,7 @@ const CaseStudyFileUpload = () => {
             }
             setCaseStudyFileName(fileNames);
         }
+        updateFiles(true);
     };
 
     const onValidation = (e: any) => {

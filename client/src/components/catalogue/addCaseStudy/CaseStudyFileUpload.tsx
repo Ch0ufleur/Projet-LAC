@@ -1,7 +1,7 @@
 import React, {MutableRefObject, useRef} from "react";
 import "./CaseStudyFileUpload.scss";
 import {Checkbox, FormControlLabel, FormGroup, FormLabel} from "@mui/material";
-import {checkList} from "../../deputy/newCase/NewCase";
+import { checkList } from "../../roles/approval/deputy/Feedback";
 import Button from "@mui/material/Button";
 
 const CaseStudyFileUpload = () => {

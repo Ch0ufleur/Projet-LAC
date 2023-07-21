@@ -4,6 +4,9 @@ import { CaseStudyService } from '@app/services/database/caseStudy.service';
 import {Role} from "@app/models/Role";
 import {verifyJwt} from "@app/utils/jwt";
 import {UserService} from "@app/services/database/user.service";
+import { CaseStep } from '@app/models/CaseStatus';
+import { readFileSync } from "fs";
+import countPages from "page-count";
 
 export const excludedFields = ['_id', 'file', 'fieldName', 'encoding', 'mimetype', 'destination', 'filename', 'path', ];
 
@@ -64,6 +67,15 @@ export class CaseStudyController {
 
         });
 
+        this.router.get('/authors', async (req: Request, res: Response) => {
+            try {
+                const caseStudyAuthors = await this.caseStudyService.findAllCaseStudyAuthors();
+                res.json(caseStudyAuthors);
+            } catch (err: any) {
+                console.log(err);
+            }
+        });
+
         this.router.get('/:id', async (req: Request, res: Response) => {
             try {
                 const caseStudy = await this.caseStudyService.findCaseStudyById(req.params.id);
@@ -91,18 +103,21 @@ export class CaseStudyController {
             try {
                 const caseStudy = req.body;
                 caseStudy["isPaidCase"] = caseStudy["isPaidCase"] === 'true';
+                let totalNbPages = 0;
                 if (req.files) {
                     let files = [];
                     for (let i = 0; i < req.files.length; i++) {
                         const fileProof = req.files[i];
                         if (fileProof) {
                             files.push(fileProof);
+                            const docxBuffer = readFileSync(fileProof.path);
+                            totalNbPages += await countPages(docxBuffer, "docx");
                             this.caseStudyService.saveCaseStudyFile(fileProof.serverFileName);
                         }
                     }
                     caseStudy["files"] = files;
                 }
-
+                caseStudy["page"] = totalNbPages;
                 const newCaseStudy = await this.caseStudyService.createCaseStudy(caseStudy);
                 res.status(201).json(newCaseStudy);
             } catch (err: any) {
@@ -114,6 +129,7 @@ export class CaseStudyController {
             try {
                 const caseStudyId = req.body.case;
                 const isApproved = req.body.approved;
+                const url = req.body.url;
 
                 let caseStudy;
                 if (isApproved) {
@@ -123,7 +139,12 @@ export class CaseStudyController {
                         return;
                     }
                     caseStudy.status += 1;
-                    await this.caseStudyService.updatePaidCaseStudy(caseStudy);
+
+                    if (caseStudy.isPaidCase && caseStudy.status == CaseStep.Posted) {
+                        caseStudy.url = url;
+                    }
+                    
+                    await this.caseStudyService.updateCaseStudy(caseStudy);
                 }
                 res.status(200).json({
                     status: 'success',

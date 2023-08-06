@@ -24,7 +24,7 @@ const NavBar: React.FC<Props> = ({}) => {
   const navigate = useNavigate();
 
   const navigateCatalog = useCallback(() => {
-    navigate("/cataogue");
+    navigate("/catalogue");
     handleClose();
   }, [navigate]);
 

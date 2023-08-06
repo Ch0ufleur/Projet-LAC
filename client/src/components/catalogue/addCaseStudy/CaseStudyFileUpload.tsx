@@ -1,4 +1,4 @@
-import React, {MutableRefObject, useRef} from "react";
+import React, {DragEvent, MutableRefObject, useRef} from "react";
 import "./CaseStudyFileUpload.scss";
 import {Checkbox, FormControlLabel, FormGroup, FormLabel} from "@mui/material";
 import { checkList } from "../../roles/approval/deputy/Feedback";
@@ -26,6 +26,44 @@ const CaseStudyFileUpload = ({updateFiles}) => {
         })
         setVerified(result);
     }
+    // https://claritydev.net/blog/react-typescript-drag-drop-file-upload-guide
+    const [dragIsOver, setDragIsOver] = React.useState(false);
+    const [files, setFiles] = React.useState<File[]>([]);
+
+    // Define the event handlers
+    const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
+        event.preventDefault();
+        setDragIsOver(true);
+    };
+
+    const handleDragLeave = (event: DragEvent<HTMLDivElement>) => {
+        event.preventDefault();
+        setDragIsOver(false);
+    };
+
+    const handleDrop = (event: DragEvent<HTMLDivElement>) => {
+        event.preventDefault();
+        setDragIsOver(false);
+        // Fetch the files
+        const droppedFiles = Array.from(event.dataTransfer.files);
+        setFiles(files.concat(droppedFiles));
+
+        // Use FileReader to read file content
+        droppedFiles.forEach((file) => {
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                console.log(reader.result);
+            };
+
+            reader.onerror = () => {
+                console.error('There was an issue reading the file.');
+            };
+
+            reader.readAsDataURL(file);
+            return reader;
+        });
+    };
 
     const [caseStudyFileName, setCaseStudyFileName] = React.useState(
         "Aucune étude de cas n'a été téléversée"
@@ -107,12 +145,27 @@ const CaseStudyFileUpload = ({updateFiles}) => {
                 onChange={handleFileUpload}
                 name="caseStudyFile"
                 multiple
-            />
-                <Button onClick={onUploadClicked}>choisir depuis votre ordinateur
-                </Button></div>
-            <div className="drag-and-drop-container">
-                <div className="drag-and-drop-prompt">Glisser-déposer le(s) fichier(s) ou <a onClick={onUploadClicked}>choisir depuis votre ordinateur</a></div>
-            </div>
+            /></div>
+            <div className={files.length === 0 ? "drag-and-drop-container" : "uploaded-file-selector-container"} onDragOver={handleDragOver}
+                 onDragLeave={handleDragLeave}
+                 onDrop={handleDrop}>
+                    <div className="drag-and-drop-prompt">
+                        { files.length === 0 && (
+                            <span>Glisser-déposer le(s) fichier(s) ou <a onClick={onUploadClicked}>choisir depuis votre ordinateur</a></span>
+
+                            )
+                        }
+                        { files.length !== 0 && (
+                            <ul>
+                                {files.map((fileName, index) => (
+                                    <div className="uploaded-file-selector">{fileName.name}</div>
+                                ))}
+                            </ul>
+
+                        )
+                        }
+                    </div>
+                </div>
             <FormLabel error={stateErrors.caseStudyFile.isError}>
                 {caseStudyFileName && <span>{caseStudyFileName}</span>}
             </FormLabel>

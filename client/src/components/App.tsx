@@ -17,6 +17,9 @@ import axios from "axios";
 import { ResponseSnackbar, SnackbarObject } from "../utils/ResponseSnackbar";
 import AboutPage from "./landingPage/AboutPage";
 import AddCaseStudy from "./catalogue/addCaseStudy/AddCaseStudy";
+import PendingCaseEdit from "./roles/edit/teacher/PendingCaseEdit/PendingCaseEdit";
+import PendingCaseStudies from "./pendingCaseStudies/PendingCaseStudies";
+import GuidePage from "./guidePage/GuidePage";
 
 function App() {
   env.config({ path: `.env.${process.env.NODE_ENV}`})
@@ -54,6 +57,7 @@ function App() {
         <Routes>
           <Route path="/" element={<AboutPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/guide" element={<GuidePage />} />
           <Route path="/catalogue" element={<Catalogue />} />
           {/* <Route path="/etude-de-cas" element={<CaseStudyWTconnection />} /> */}
           <Route path="/etude-de-cas" element={<CaseStudyWconnection />} />
@@ -62,6 +66,8 @@ function App() {
             element={<CollaborativeSpace />}
           />
           <Route path="/dashboard" element={<DashboardPaidCase />} />
+          <Route path="/my-pending-case-studies" element={<PendingCaseStudies />}/>
+          <Route path="/my-pending-case-studies/case-edit" element={<PendingCaseEdit />} />
           <Route path="/approval" element={<Approval />} />
           <Route path="/new-case-approval" element={<NewCase />} />
           <Route path="/create" element={<AddCaseStudy />} />

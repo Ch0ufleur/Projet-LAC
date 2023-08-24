@@ -1,25 +1,27 @@
 {
-    "compilerOptions": {
-        "baseUrl": "./",
-        "target": "es6",
-        "types": ["reflect-metadata", "@types/mocha", "mocha", "node"],
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "outDir": "out",
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "noImplicitAny": true,
-        "noImplicitThis": true,
-        "noFallthroughCasesInSwitch": true,
-        "resolveJsonModule": true,
-        //"esModuleInterop": true,
-        "noUnusedLocals": true,
-        "noImplicitReturns": true,
-        "suppressImplicitAnyIndexErrors": true,
-        "strictNullChecks": true,
-        "paths": {
-            "@app/*": ["./app/*"],
-        }
-    }
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "typeRoots": ["./src/types"]
+  },
+  "include": [
+    "src"
+  ]
 }

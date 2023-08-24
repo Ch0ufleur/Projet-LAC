@@ -67,6 +67,7 @@ export default function AddCaseStudy() {
       title: e.target.elements.title.value,
       desc: e.target.elements.desc.value,
       authors: e.target.elements.author.value,
+      submitter: localStorage.getItem("email"),
       classId: e.target.elements.course.value,
       files: Array.from(e.target.elements.caseStudyFile.files),
       discipline : e.target.elements.discipline.value,
@@ -152,7 +153,7 @@ export default function AddCaseStudy() {
       };
       isValid = false;
     }
-    if (e.caseStudyFile.value.trim() === "") {
+    if (caseStudyFileName.trim() === "") {
       stateErrorsCopy.caseStudyFile = {
         isError: true,
         message: "Veuillez entrer votre étude de cas",
@@ -253,6 +254,14 @@ export default function AddCaseStudy() {
   };
 
   const updateFiles = (didItUpdate: boolean) => {
+    if(caseStudyFileName.length===0) {
+      let fileNames: string = files[0].name;
+      for(let i = 1; i < files.length; i++) {
+        fileNames += ", " + files[i].name;
+      }
+      setCaseStudyFileName(fileNames);
+    }
+
     setHasUpdatedFiles(didItUpdate);
   };
 
@@ -335,9 +344,6 @@ export default function AddCaseStudy() {
                   }
                 </div>
               </div>
-              <FormLabel error={stateErrors.caseStudyFile.isError}>
-                {caseStudyFileName && <span>{caseStudyFileName}</span>}
-              </FormLabel>
               <div style={{marginLeft: '24px'}}>
                 <Button disabled={files.length === 0} variant="contained" onClick={()=>updateFiles(true)}>
                   Suivant
@@ -349,6 +355,9 @@ export default function AddCaseStudy() {
         <div className={!hasUpdatedFiles ? 'hidden' : ''}>
           <div className="landing-segment-container">
             <div className="landing-segment-column-left">
+              <FormLabel error={stateErrors.caseStudyFile.isError}>
+                {caseStudyFileName && <span>{caseStudyFileName}</span>}
+              </FormLabel>
               <form
                   onSubmit={onSubmit}
                   id="caseStudyForm"
@@ -371,6 +380,15 @@ export default function AddCaseStudy() {
                   />
                   <FormLabel>Étude de cas payante</FormLabel>
                 </div>
+                <input
+                    hidden
+                    ref={inputFiles}
+                    accept=".doc,.docx,.pdf"
+                    type="file"
+                    onChange={handleFileUpload}
+                    name="caseStudyFile"
+                    multiple
+                />
 
                 <TextField
                     autoFocus
@@ -466,6 +484,11 @@ export default function AddCaseStudy() {
                       </MenuItem>
                   ))}
                 </Select>
+                <div style={{marginLeft: '24px'}}>
+                  <Button variant="contained" type="submit">
+                    Soumettre
+                  </Button>
+                </div>
               </form>
             </div>
           </div>

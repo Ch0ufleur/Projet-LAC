@@ -1,6 +1,6 @@
 import React from "react";
 import "./DashboardPaidCase.scss";
-import CasesRecieved from "./CasesRecieved";
+import CasesReceived from "./CasesReceived";
 import CasesWaitingApproval from "./CasesWaitingApproval";
 import Button from "@mui/material/Button";
 import { UnlockAccess } from "../../connection/UnlockAccess";
@@ -151,7 +151,7 @@ function DashboardPaidCase() {
           <CasesWaitingApproval caseStatusData={calculateCaseStatusStats()}/>
         </div>
         <div>
-          <CasesRecieved caseReceivedData={calculateCaseReceivedStats()} />
+          <CasesReceived caseReceivedData={calculateCaseReceivedStats()} />
         </div>
       </div>
       <div>

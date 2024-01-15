@@ -43,7 +43,7 @@ export default function AddToCatalogueFeedback(caseData: SingleCaseProp) {
         <br />
         <Typography>
           À noter que cette étape est <b>irréversible</b> ; l'étude de cas sera
-          disponible dans le catalogue après avoir été confirmé. <br /> <br />
+          disponible dans le catalogue après avoir été confirmée. <br /> <br />
         </Typography>
         {newCase.isPaidCase && (
           <FormControl>

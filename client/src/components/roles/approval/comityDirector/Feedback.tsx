@@ -83,7 +83,7 @@ export default function ComityDirectorFeedback(caseData: SingleCaseProp) {
                   .length === 0 && (
                   <div className="empty-section">
                     <Typography variant="caption">
-                      Aucune évaluation n'a été effectué
+                      Aucune évaluation n'a été effectuée
                     </Typography>
                   </div>
                 )}
@@ -135,7 +135,7 @@ export default function ComityDirectorFeedback(caseData: SingleCaseProp) {
               .length === 0 && (
               <div className="empty-section">
                 <Typography variant="caption">
-                  Aucune évaluation n'a été effectué
+                  Aucune évaluation n'a été effectuée
                 </Typography>
               </div>
             )}

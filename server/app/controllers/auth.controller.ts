@@ -56,7 +56,11 @@ export class AuthController {
                 }
 
                 this.emailService.sendWelcomeEmail(user!.email!, user!.firstName! + ' ' + user!.lastName!);
-                this.emailService.sendNewUserEmail();
+
+                if(user.role && userInfo.role == Role.ProfessorNotApproved) {
+                    const deputies = await this.userService.findUsers({ role: Role.Deputy });
+                    this.emailService.sendNewUserEmail(deputies);
+                }
 
                 res.status(201).json({
                     status: 'success',
@@ -95,8 +99,8 @@ export class AuthController {
                         Date.now() + parseInt(ACCESS_TOKEN_EXPIRES_IN) * 60 * 1000
                     ),
                     maxAge: parseInt(ACCESS_TOKEN_EXPIRES_IN) * 60 * 1000,
-       //             httpOnly: true,
-                    sameSite: 'strict',
+                    secure: true,
+                    sameSite: 'none',
                 };
 
                 // Send Access Token in Cookie

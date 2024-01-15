@@ -14,13 +14,14 @@ import LIGHT from "../../img/icons/light.svg";
 import MEDIA from "../../img/icons/media.svg";
 import PENCIL from "../../img/icons/pencil.svg";
 import SPELL from "../../img/icons/spell.svg";
-import Login, {LoginRef} from "../connection/Login";
 import {TeamMember} from "../../model/Team";
-import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
+import {Accordion, AccordionDetails, AccordionSummary, Button, Fab, SxProps, Tooltip, makeStyles} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Timeline from "../about/creation/Timeline";
+import LightbulbIcon from '@mui/icons-material/Lightbulb';
+
 export default function AboutPage() {
-    const loginRef = useRef<LoginRef | null>(null);
+
     const teamMembersManagement: TeamMember[] = [
         {
             id: 1,
@@ -32,18 +33,18 @@ export default function AboutPage() {
         },
         {
             id: 2,
-            name: "Grégoire Banse",
-            role: "Adjoint à la direction",
-            occupation: "Étudiant, génie industriel",
-            picture: "./img/member2.jpg",
+            name: "Olivier Gendreau",
+            title: "Ph.D",
+            role: "Directeur technologique",
+            occupation: "Maître d'enseignement, génie logiciel",
+            picture: "./img/member3.jpg",
         },
         {
             id: 3,
-            name: "Olivier Gendreau",
-            title: "Ph.D",
-            role: "Gestion du volet technologique",
-            occupation: "Maître d'enseignement, génie logiciel",
-            picture: "./img/member3.jpg",
+            name: "Grégoire Banse",
+            role: "Responsable des communications",
+            occupation: "Étudiant, génie industriel",
+            picture: "./img/member2.jpg",
         },
     ];
 
@@ -59,15 +60,36 @@ export default function AboutPage() {
             id: 4,
             name: "Samira Keivanpour",
             title: "Ph.D",
-            occupation: "Professeure adjointe, sujet",
+            occupation: "Professeure adjointe, production durable",
             picture: "./img/member4.jpg",
         },
         {
             id: 5,
             name: "Fabiano Armellini",
             title: "Ph.D",
-            occupation: "Professeur agrégé, entrepreunariat technologique",
+            occupation: "Professeur titulaire, entrepreunariat technologique",
             picture: "./img/member5.jpg",
+        },
+        {
+            id: 6,
+            name: "Éric Germain",
+            title: "B.Ing., M.Sc.A.",
+            occupation: "Maître d'enseignement, génie logiciel",
+            picture: "./img/member7.jpg",
+        },
+        {
+            id: 7,
+            name: "Camélia Dadouchi",
+            title: "Ph.D.",
+            occupation: "Professeure adjointe, génie industriel",
+            picture: "./img/member8.jpg",
+        },
+        {
+            id: 8,
+            name: "Octave Niamié",
+            title: "Ph.D.",
+            occupation: "Professeur adjoint, entrepreneuriat technologique",
+            picture: "./img/member9.jpg",
         },
     ];
     const studentsPrisme: TeamMember[] = [
@@ -123,20 +145,38 @@ export default function AboutPage() {
         {
             id: 10,
             name: "Charles Poulin",
-            picture: "./img/member2.jpg",
+            picture: "./img/student10.jpg",
         },
         {
             id: 11,
             name: "Edward Healy",
-            picture: "./img/member2.jpg",
+            picture: "./img/student11.jpg",
         },
     ];
+
+    const fabStyle = {
+        position: 'fixed',
+        bottom: 16,
+        right: 16,
+        width: "4vw",
+        height: "4vw"
+    };
+
+    const iconStyle = {
+        width: "2.5vw",
+        height: "2.5vw"
+      };
+
     return <div id="landingPage">
             <LandingNavBar></LandingNavBar>
+            <Tooltip title= "Accéder aux ressources pédagogiques" arrow>
+                <Fab sx={fabStyle as SxProps} id="guide-button" color="primary" size="large" href="/guide"><LightbulbIcon sx={iconStyle as SxProps} fontSize="large"/>
+                </Fab>
+            </Tooltip>
             <header className="student-banner">
                 <div></div>
                 <div id="access-platform">
-                    <Login ref={loginRef}/>
+                    <Button variant="contained" color="primary"  href="/catalogue">Accéder à la plateforme</Button>
                 </div>
             </header>
             <div className="landing-segment-container">
@@ -308,7 +348,7 @@ export default function AboutPage() {
                     </Accordion>
                     <Accordion sx={{ background: 'transparent' }}>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                            Étudiants PRISME 2021-2022
+                            Étudiants en génie industriel (2021-2022)
                         </AccordionSummary>
                         <AccordionDetails>
                             <p>
@@ -354,7 +394,7 @@ export default function AboutPage() {
                     </Accordion>
                     <Accordion sx={{ background: 'transparent' }}>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                            Étudiants en génie logiciel (développement)
+                            Étudiants en génie logiciel (2022-2023)
                         </AccordionSummary>
                         <AccordionDetails>
                             <p>

@@ -1,4 +1,4 @@
-import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Button } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Button, Typography } from "@mui/material";
 import ForgotPassword from "./ForgotPassword";
 import Register from "./Register";
 import axios from "axios";
@@ -62,7 +62,7 @@ const LoginPopup = forwardRef<LoginPopupRef, Props>(
           localStorage.setItem("role", res.data.role);
           localStorage.setItem("email", res.data.email);
           if(!hasExpired){
-            navigate("/catalogue") // User logged in from landing page
+            window.location.reload(); // User logged in from landing page
           } else if(props.onLoggedIn){
             props.onLoggedIn(); // Refresh only Login/Logout button to not lose changes
           } 
@@ -74,7 +74,7 @@ const LoginPopup = forwardRef<LoginPopupRef, Props>(
       
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Se connecter</DialogTitle>
+      <DialogTitle><Typography variant="h4">Se connecter</Typography></DialogTitle>
       <DialogContent>
         <DialogContentText>
           Veuillez fournir vos identifiants pour accéder aux études de cas non

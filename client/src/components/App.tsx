@@ -1,4 +1,4 @@
-import React, { createContext, useRef } from "react";
+import React, { createContext, useEffect, useRef } from "react";
 import Catalogue from "./catalogue/Catalogue";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import CaseStudyWconnection from "./caseStudy/CaseStudyWconnection";
@@ -18,6 +18,8 @@ import PendingCaseStudies from "./pendingCaseStudies/PendingCaseStudies";
 import GuidePage from "./guidePage/GuidePage";
 import LoginPopup, { LoginPopupRef } from "./connection/LoginPopup";
 import ForbiddenPage from "./roles/ForbiddenPage";
+import GlobalStyles from "@mui/material/GlobalStyles";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 interface AppContextValue {
   openLogInPopup: () => void;
@@ -97,8 +99,122 @@ function App() {
     }
   );
 
+  const theme = createTheme({
+    palette: {
+      mode: 'light',
+      primary: {
+        main: '#41aae6', 
+        light: '#4aaee7', 
+        dark: '#34a4e4', 
+        contrastText: '#fff',
+      },
+      secondary: {
+        main: '#ff9100',
+        light: '#ffc246', 
+        dark: '#c56200', 
+        contrastText: '#000',
+      },
+      error: {
+        main: '#f44336', 
+      },
+      warning: {
+        main: '#ff9800', 
+      },
+      success: {
+        main: '#4caf50', 
+      },
+      info: {
+        main: '#2196f3', 
+      },
+      text: {
+        primary: '#333', 
+        secondary: '#666', 
+        disabled: '#999', 
+      },
+      background: {
+        default: '#F8F6EE', 
+        paper: '#FFFFFD', 
+      },
+    },
+    typography: {
+        fontFamily: `-apple-system, BlinkMacSystemFont, 'Yaldevi', 'Gotu', sans-serif`,
+        h1: {
+            fontSize: `calc(1.15rem + 1.15vw)`,
+            fontWeight: 'bold',
+          },
+          h2: {
+            fontSize: `calc(0.9rem + 0.9vw)`,
+            fontWeight: 'bold',
+          },
+          h3: {
+            fontSize: `calc(0.65rem + 0.65vw)`,
+            fontWeight: 'bold',
+          },
+          h4: {
+            fontSize: `calc(0.5rem + 0.5vw)`,
+            fontWeight: 'bold',
+          },
+          h5: {
+            fontSize: `calc(0.4rem + 0.4vw)`,
+            fontWeight: 'bold',
+          },
+          h6: {
+            fontSize: `calc(0.3rem + 0.3vw)`,
+            fontWeight: 'bold',
+          },
+          subtitle1: {
+            fontSize: `calc(0.45rem + 0.45vw)`,
+            lineHeight: 1.5,
+          },
+          body1: {
+            fontSize: `calc(0.4rem + 0.4vw)`,
+            lineHeight: 1.5,
+          },
+          body2: {
+            fontSize: `calc(0.35rem + 0.35vw)`,
+            lineHeight: 1.4,
+          },
+          caption: {
+            fontSize: `calc(0.3rem + 0.3vw)`,
+            lineHeight: 1.2,
+          },
+      },
+    });
+
+    window.addEventListener('resize', function () {
+      arrangeNavBars();
+    });
+  
+    useEffect(() => {
+      arrangeNavBars();
+    }, []);
+
+  const arrangeNavBars = () => {
+    const mainNavBar = document.querySelector('#nav-bar') as HTMLElement;
+    const mainContent = document.querySelector('#content') as HTMLElement;
+
+    if (mainNavBar && mainContent && window.location.pathname !== "/") {
+        const navbarHeight = mainNavBar.clientHeight;
+        mainContent.style.marginTop = `${navbarHeight}px`;
+    }
+  }
+
   return (
     <div>
+        <ThemeProvider theme={theme}>
+        <GlobalStyles
+            styles={{
+            body: {
+                backgroundColor: theme.palette.background.default,
+                WebkitFontSmoothing: 'antialiased',
+                MozOsxFontSmoothing: 'grayscale',
+                margin: 0,
+                padding: 0,
+                minHeight: '100vh',
+            },
+            }}
+      />
+       <div>
       <AppContext.Provider value={contextValue}>
           <NavBar ref={navBarRef}/>
       <div id="content">
@@ -130,7 +246,7 @@ function App() {
               path="/*"
               element={<div>Error 404</div>}
           />
-        </Routes>
+      </Routes>
       </div>
       <footer style={{height: "50px", width: "100%", backgroundColor: "#06091f", display: "flex", justifyContent: "center", marginTop: "5vh"}}>
         <div style={{display:"inline-block", color: "whitesmoke"}}>&copy; 2023</div>
@@ -139,6 +255,9 @@ function App() {
       <LoginPopup onLoggedIn={onLoggedIn} ref={loginPopupRef}/>
   </AppContext.Provider>
   </div>
+  </ThemeProvider>
+</div>
+   
       
   );
 }

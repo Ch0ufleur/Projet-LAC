@@ -11,11 +11,11 @@ import {
 import { Bar } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
-export interface CaseStatusGraphProps {
-  caseStatusData: number[];
+export interface CaseReceivedGraphProps {
+  caseReceivedData: number[];
 }
 
-export default function App(caseReceivedGraphProps: CaseStatusGraphProps) {
+export default function App(caseReceivedGraphProps: CaseReceivedGraphProps) {
 
   ChartJS.register(
     CategoryScale,
@@ -31,7 +31,7 @@ export default function App(caseReceivedGraphProps: CaseStatusGraphProps) {
     plugins: {
       title: {
         display: true,
-        text: "Études de cas en traitement",
+        text: "Études de cas reçues",
         font: {
           size: 20,
           weight: "bold",
@@ -60,34 +60,21 @@ export default function App(caseReceivedGraphProps: CaseStatusGraphProps) {
         },
       },
     },
-    secondXAxis: {
-      axis: "x",
-      labels: ["V2", "syntax", "in", "v3"],
-      grid: {
-        drawOnChartArea: false,
-      },
-    },
   };
   
   const labels = [
-    "À préapprouver",
-    "En révision",
-    "À ajouter au catalogue",
-    "En attente de modifications"
+    "Au catalogue",
+    "En traitement",
   ];
-  const labelData = caseReceivedGraphProps.caseStatusData;
   
   const data = {
     labels,
     datasets: [
       {
-        data: labelData,
+        data: caseReceivedGraphProps.caseReceivedData,
         backgroundColor: [
           "rgba(68, 84, 106, 1)",
-          "rgba(132, 151, 176, 1)",
           "rgba(192, 0, 0, 1)",
-          "rgba(248, 150, 31, 1)",
-          "rgba(166, 166, 166, 1)",
         ],
       },
     ],
